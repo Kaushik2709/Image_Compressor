@@ -5,7 +5,9 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd ../image_compressor_frontend && npm install && npm run build && cp -r dist ../image_compressor_backend/dist/frontend",
+    "build:backend": "tsc",
     "start": "node dist/index.js",
     "dev": "nodemon index.ts"
   },
