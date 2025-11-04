@@ -20,7 +20,7 @@ app.use(cors({
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // Replace the previous path logic with this:
-const frontendPath = path.join(__dirname, "client-build"); // OR 'public'
+const frontendPath = path.join(__dirname, "../image_compressor_frontend/dist"); // OR 'public'
 app.use(express.static(frontendPath));
 app.get(/^\/(?!api).*/, (req, res) => {
     res.sendFile(path.join(frontendPath, "index.html"));
