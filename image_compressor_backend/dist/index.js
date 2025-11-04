@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
-import { Imagerouter } from "./routes/imageRoutes.js";
+import { Imagerouter } from "./routes/imageRoutes.ts";
 import cors from "cors";
 import cluster from "cluster";
 import os from "os";
@@ -20,9 +20,10 @@ app.use(cors({
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // Replace the previous path logic with this:
-const frontendPath = path.join(__dirname, "../image_compressor_frontend/dist"); // OR 'public'
+const frontendPath = path.join(__dirname, "..", "image_compressor_frontend", "dist");
 app.use(express.static(frontendPath));
 app.get(/^\/(?!api).*/, (req, res) => {
+    // This will now correctly resolve to: /project-root/image_compressor_frontend/dist/index.html
     res.sendFile(path.join(frontendPath, "index.html"));
 });
 // ✅ Parse JSON bodies
