@@ -5,8 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node index.ts",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd ../image_compressor_frontend && npm install && npm run build",
+    "build:backend": "tsc",
+    "start": "node dist/index.js",
     "dev": "nodemon --exec ts-node index.ts"
   },
   "author": "",
