@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 4000;
 // ✅ Enable CORS only for localhost:8080
 app.use(
   cors({
-    origin: "http://localhost:8080",
+    origin: "http://localhost:8080" || "https://nologin-imagecompressor.onrender.com",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type"],
   })
