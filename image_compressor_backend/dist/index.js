@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
-import { Imagerouter } from "./routes/imageRoutes.ts";
+import { Imagerouter } from "./routes/imageRoutes.js";
 import cors from "cors";
 import cluster from "cluster";
 import os from "os";
