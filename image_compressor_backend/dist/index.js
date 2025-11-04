@@ -20,7 +20,7 @@ app.use(cors({
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // Replace the previous path logic with this:
-const frontendPath = path.join(__dirname, "..", "image_compressor_frontend", "dist");
+const frontendPath = path.join(__dirname, "../", "image_compressor_frontend", "dist");
 app.use(express.static(frontendPath));
 app.get(/^\/(?!api).*/, (req, res) => {
     // This will now correctly resolve to: /project-root/image_compressor_frontend/dist/index.html
