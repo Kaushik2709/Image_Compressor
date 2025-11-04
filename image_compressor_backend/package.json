@@ -5,11 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "npm run build:frontend && npm run build:backend",
-    "build:frontend": "cd ../image_compressor_frontend && npm install && npm run build",
-    "build:backend": "tsc",
-    "start": "npm run dev",
-    "dev": "npx ts-node --esm index.ts"
+    "build": "tsc",
+    "start": "node index.ts",
+    "dev": "nodemon index.ts"
   },
   "author": "",
   "license": "ISC",
