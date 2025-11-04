@@ -4,7 +4,7 @@ import multer from "multer";
 import sharp from "sharp";
 import { createClient } from "@supabase/supabase-js";
 import fs from "fs";
-import path from "path";
+import path, { dirname } from "path";
 import { Imagerouter } from "./routes/imageRoutes.ts";
 import cors from "cors";
 import cluster from "cluster";
@@ -12,6 +12,15 @@ import os from "os";
 import { fileURLToPath } from "url";
 
 dotenv.config();
+
+// --- FIX FOR __dirname IN ES MODULES ---
+// 1. Get the file path URL
+// 2. Convert the URL to a standard file path string
+// 3. Extract the directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+// --- END FIX ---
+console.log(__filename,"fileeeeeeeeenameeeeeeeeeeee");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -29,17 +38,9 @@ app.use(
   })
 );
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// 🛠️ THE FIX: Using path.resolve to reliably traverse to the sibling directory
-// This resolves the absolute path starting from __dirname, moves up one level (..), 
-// and then into the frontend's dist folder.
-const frontendPath = path.resolve(__dirname, "..", "image_compressor_frontend", "dist");
-
-// Serve static files from the frontend build directory
-app.use(express.static(frontendPath));
-
+// console.log(fileURLToPath(import.meta.url)); // Removed console.log for cleaner code
+const frontendPath = path.join(__dirname,"../image_compressor_frontend/dist")
+app.use(express.static(frontendPath))
 // Serve index.html for all non-API routes (for Single Page Application routing)
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
