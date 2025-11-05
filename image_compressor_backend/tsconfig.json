@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "Nodenext",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "outDir": "./dist",
     "rootDir": "./",
@@ -9,5 +9,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-"include": ["**/*.ts"],
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
