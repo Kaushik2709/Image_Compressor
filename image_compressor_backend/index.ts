@@ -5,7 +5,7 @@ import sharp from "sharp";
 import { createClient } from "@supabase/supabase-js";
 import fs from "fs";
 import path, { dirname } from "path";
-import { Imagerouter } from "./routes/imageRoutes.ts";
+import { Imagerouter } from "./routes/imageRoutes.js"; // ✅ must end with .js when using NodeNext
 import cors from "cors";
 import cluster from "cluster";
 import os from "os";
@@ -21,7 +21,7 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// ✅ Enable CORS only for allowed origins
+// ✅ Enable CORS for allowed origins
 app.use(
   cors({
     origin:
@@ -42,9 +42,19 @@ app.use("/file", Imagerouter);
 
 // ✅ Serve frontend (React) build in production
 if (process.env.NODE_ENV === "production") {
-  const frontendPath = path.join(__dirname, "../image_compressor_frontend/dist");
+  // 🧠 Auto-detect correct dist path for both local & Render environments
+  let frontendPath = path.resolve(__dirname, "../../image_compressor_frontend/dist");
+
+  // If running locally and the path doesn’t exist, use ../ (common local setup)
+  if (!fs.existsSync(frontendPath)) {
+    frontendPath = path.resolve(__dirname, "../image_compressor_frontend/dist");
+  }
+
+  console.log("✅ Serving frontend from:", frontendPath);
+
   // Serve static files
   app.use(express.static(frontendPath));
+
   // For all non-API routes, send back index.html
   app.get(/^\/(?!api|file).*/, (req, res) => {
     res.sendFile(path.join(frontendPath, "index.html"));
