@@ -5,7 +5,7 @@ import sharp from "sharp";
 import { createClient } from "@supabase/supabase-js";
 import fs from "fs";
 import path, { dirname } from "path";
-import { Imagerouter } from "./routes/imageRoutes.js"; // ✅ must end with .js when using NodeNext
+import { Imagerouter } from "./routes/imageRoutes.ts"; // ✅ must end with .js when using NodeNext
 import cors from "cors";
 import cluster from "cluster";
 import os from "os";
@@ -42,24 +42,25 @@ app.use("/file", Imagerouter);
 
 // ✅ Serve frontend (React) build in production
 if (process.env.NODE_ENV === "production") {
-  // 🧠 Auto-detect correct dist path for both local & Render environments
-  let frontendPath = path.resolve(__dirname, "../../image_compressor_frontend/dist");
+  // ✅ In Render, the frontend is one level above the backend
+  let frontendPath = path.resolve(__dirname, "../image_compressor_frontend/dist");
 
-  // If running locally and the path doesn’t exist, use ../ (common local setup)
+  // ✅ If that doesn’t exist (local setup case), try relative local path
   if (!fs.existsSync(frontendPath)) {
-    frontendPath = path.resolve(__dirname, "../image_compressor_frontend/dist");
+    frontendPath = path.resolve(__dirname, "../../image_compressor_frontend/dist");
   }
 
   console.log("✅ Serving frontend from:", frontendPath);
 
-  // Serve static files
   app.use(express.static(frontendPath));
 
-  // For all non-API routes, send back index.html
-  app.get(/^\/(?!api|file).*/, (req, res) => {
-    res.sendFile(path.join(frontendPath, "index.html"));
+  app.get("*", (req, res) => {
+    const indexFile = path.join(frontendPath, "index.html");
+    console.log("🎯 Sending file:", indexFile);
+    res.sendFile(indexFile);
   });
 }
+
 
 // 🚀 Cluster setup for multi-core performance
 const totalCPUs = os.cpus().length;
