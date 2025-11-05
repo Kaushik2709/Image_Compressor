@@ -38,13 +38,12 @@ app.use(
 );
 
 // console.log(fileURLToPath(import.meta.url)); // Removed console.log for cleaner code
-const frontendPath = path.join(__dirname,"../image_compressor_frontend/dist")
-app.use(express.static(frontendPath))
-// Serve index.html for all non-API routes (for Single Page Application routing)
+const frontendPath = path.join(__dirname, "../image_compressor_frontend/dist"); // DELETE
+app.use(express.static(frontendPath)); // DELETE
 app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
-});
-
+  // DELETE
+  res.sendFile(path.join(frontendPath, "index.html")); // DELETE
+}); // DELETE
 // ✅ Parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

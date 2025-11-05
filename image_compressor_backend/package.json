@@ -2,14 +2,12 @@
   "name": "image_compressor_backend",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "npm run build:frontend && npm run build:backend",
-    "build:frontend": "cd ../image_compressor_frontend && npm install && npm run build && cp -r dist ../image_compressor_backend/dist/frontend",
-    "build:backend": "tsc",
+    "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon index.ts"
+    "dev": "nodemon --exec ts-node index.ts"
   },
   "author": "",
   "license": "ISC",
