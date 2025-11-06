@@ -23,7 +23,7 @@ app.use(
     origin:
       process.env.NODE_ENV === "production"
         ? "https://image-compressor-ao81.onrender.com"
-        : "",
+        : "http://localhost:8080",
 
     methods: ["GET", "POST", "PUT", "DELETE"],
 
