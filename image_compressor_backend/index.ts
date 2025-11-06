@@ -39,7 +39,7 @@ const __dirname = path.dirname(__filename);
 
 const frontendPath = path.join(
   __dirname,
-  "../",
+  "../../",
   "image_compressor_frontend",
   "dist"
 );
