@@ -22,7 +22,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? "https://nologin-imagecompressor.onrender.com"
+        ? "https://image-compressor-frontends.onrender.com/"
         : "http://localhost:8080",
 
     methods: ["GET", "POST", "PUT", "DELETE"],
