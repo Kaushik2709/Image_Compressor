@@ -22,8 +22,8 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? "https://image-compressor-frontends.onrender.com/"
-        : "http://localhost:8080",
+        ? "https://image-compressor-ao81.onrender.com"
+        : "",
 
     methods: ["GET", "POST", "PUT", "DELETE"],
 
