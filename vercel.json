@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "image_compressor_backend/package.json",
+      "use": "@vercel/node",
+      "options": {
+        "installCommand": "npm install && npm run build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "image_compressor_backend/index.ts"
+    }
+  ]
+}

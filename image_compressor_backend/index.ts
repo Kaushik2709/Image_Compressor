@@ -37,14 +37,12 @@ const __dirname = path.dirname(__filename);
 
 // Replace the previous path logic with this:
 
-const publicPath = path.join(__dirname, "public");
+const frontendDistPath = path.join(__dirname, "../image_compressor_frontend/dist");
 
-app.use(express.static(publicPath));
+app.use(express.static(frontendDistPath));
 
 app.get(/^\/(?!api).*/, (req, res) => {
-  // This will now correctly resolve to: /project-root/image_compressor_frontend/dist/index.html
-
-  res.sendFile(path.join(publicPath, "index.html"));
+  res.sendFile(path.join(frontendDistPath, "index.html"));
 });
 
 // ✅ Parse JSON bodies
@@ -53,22 +51,6 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/file", Imagerouter);
+app.use("/api/file", Imagerouter);
 
-const totalCPUs = os.cpus().length;
-
-if (cluster.isPrimary) {
-  for (let i = 0; i < totalCPUs; i++) {
-    cluster.fork();
-  }
-
-  cluster.on("exit", (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died`);
-  });
-
-  // console.log(`Primary ${process.pid} is running`);
-} else {
-  app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
-  });
-}
+export default app;
