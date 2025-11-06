@@ -37,19 +37,14 @@ const __dirname = path.dirname(__filename);
 
 // Replace the previous path logic with this:
 
-const frontendPath = path.join(
-  __dirname,
-  "../../",
-  "image_compressor_frontend",
-  "dist"
-);
+const publicPath = path.join(__dirname, "public");
 
-app.use(express.static(frontendPath));
+app.use(express.static(publicPath));
 
 app.get(/^\/(?!api).*/, (req, res) => {
   // This will now correctly resolve to: /project-root/image_compressor_frontend/dist/index.html
 
-  res.sendFile(path.join(frontendPath, "index.html"));
+  res.sendFile(path.join(publicPath, "index.html"));
 });
 
 // ✅ Parse JSON bodies
